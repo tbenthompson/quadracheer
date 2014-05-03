@@ -23,11 +23,17 @@ est = sum(f(tx) .* tw);
 assert(abs(telles_paper_10_pts - est) < 0.00001);
 
 %test telles quasi-singular quadrature with the example on page 966
-g = @(x) (1.004 - x) .^ -2;
+% sing_pt = 1.08
+sing_pt = 1.004;
+g = @(x) (sing_pt - x) .^ -2;
 f = @(y) 2 * g(2 * y - 1);
+
+% for sing_pt = 1.08
+% exact = 12.0192;
+% for sing_pt = 1.004
 exact = 249.500998;
 x_nearest = 1.0;
-D = 0.004;
+D = sing_pt - 1.0;
 N = 20;
 [tx, tw] = telles_quasi_singular(N, x_nearest, D);
 est_telles = sum(f(tx) .* tw);
