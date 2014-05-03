@@ -1,4 +1,4 @@
-function [x, w] = tellesquad(N, x0)
+function [x, w] = telles_singular(N, x0)
     % Use a cubic polynomial transformation to turn a 1D log singular
     % integral into an integrable form.
     % This should also be able to accurately integrate terms like
@@ -22,8 +22,6 @@ function [x, w] = tellesquad(N, x0)
     % It SHOULD read:
     % (3 * (gamma - gamma_bar) ** 2) / (1 + 3 * gamma_bar ** 2)
 
-    % TODO: Implement the near-by singularity method from the Telles paper.
-
     % The location of the singularity in eta space
     eta_bar = 2 * x0 - 1.0;
 
@@ -33,8 +31,8 @@ function [x, w] = tellesquad(N, x0)
     term1 = (eta_bar * eta_star + abs(eta_star));
     term2 = (eta_bar * eta_star - abs(eta_star));
 
-    % Fractional powers of negative numbers are multiply valued and python
-    % recognizes this. So, I specify that I want the real valued third root
+    % Fractional powers of negative numbers are multiply valued 
+    % So, I specify that I want the real valued third root
     gamma_bar = sign(term1) * abs(term1) ^ (1.0 / 3.0) + ...
                 sign(term2) * abs(term2) ^ (1.0 / 3.0) + eta_bar;
 
