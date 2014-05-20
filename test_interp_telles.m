@@ -1,6 +1,6 @@
 % The problem I solve:
 % exact is from mathematica
-sing_pt = 1.001;
+sing_pt = 1.005;
 denom = @(x) (sing_pt - x) .^ 2;
 numer = @(x) x.^3;
 f = @(x) numer(x) ./ denom(x);
@@ -10,7 +10,7 @@ exact = exact_f(sing_pt)
 % Solved with standard Telles quadrature
 x_nearest = 1.0;
 D = sing_pt - 1.0;
-N = 19;
+N = 10;
 [tx, tw] = telles_quasi_singular(N, x_nearest, D);
 est_telles = sum(f(tx) .* tw)
 
