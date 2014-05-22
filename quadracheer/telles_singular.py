@@ -54,12 +54,3 @@ def telles_singular(N, x0):
                 "singularity. Choose a different order of integration.")
 
     return x, w
-
-def telles_singular_ab(N, x0, a, b):
-    """
-    Map the telles quadrature to a different interval.
-    """
-    moved_x0 = (2 * (x0 - a) / b) - 1
-    x, w = telles_singular(N, moved_x0)
-    return 0.5 * (b - a) * x + 0.5 * (b + a), \
-           0.5 * (b - a) * w

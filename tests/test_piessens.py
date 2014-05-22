@@ -1,6 +1,7 @@
 import numpy as np
 from quadracheer.piessens import piessen_neg_one_to_one_nodes,\
                                  piessen_method, piessens
+from quadracheer.map import map_singular
 
 def test_piessen_neg_1_1():
     # Example 1 from Piessens
@@ -34,7 +35,7 @@ def test_piessen_0_1_with_singularity():
 def test_QuadOneOverR_1():
     f = lambda x: 1 / (x - 0.4)
     exact = np.log(3.0 / 2.0)
-    qx, qw = piessens(2, 0.4, nonsingular_N = 10)
+    qx, qw = map_singular(piessens, 2, 0.4, 0.0, 1.0, nonsingular_N = 10)
     est = np.sum(f(qx) * qw)
     np.testing.assert_almost_equal(exact, est)
 
@@ -43,7 +44,7 @@ def test_QuadOneOverR_2():
     g = lambda x: np.exp(x) / x
     f = lambda x: 2 * g((2 * x) - 1)
     exact = 2.11450175
-    qx, qw = piessens(8, 0.5)
+    qx, qw = map_singular(piessens, 8, 0.5, 0.0, 1.0)
     est = np.sum(f(qx) * qw)
     np.testing.assert_almost_equal(exact, est)
 
@@ -54,7 +55,7 @@ def test_QuadOneOverR_3():
     exact = 2.61398312
     # Piessens estimate derived with a two pt rule.
     piessens_est = 2.61398135
-    qx, qw = piessens(2, 0.5)
+    qx, qw = map_singular(piessens, 2, 0.5, 0.0, 1.0)
     est = np.sum(f(qx) * qw)
     np.testing.assert_almost_equal(piessens_est, est)
 
@@ -62,7 +63,7 @@ def test_QuadOneOverR_3():
 def test_QuadOneOverR_4():
     f = lambda x: np.exp(x) / (x - 0.8)
     exact = -1.13761642399
-    qx, qw = piessens(2, 0.8, nonsingular_N = 20)
+    qx, qw = map_singular(piessens, 2, 0.8, 0.0, 1.0, nonsingular_N = 20)
     est = np.sum(f(qx) * qw)
     np.testing.assert_almost_equal(exact, est)
 
@@ -70,8 +71,13 @@ def test_QuadOneOverR_4():
 def test_QuadOneOverR_5():
     f = lambda x: np.exp(x) / (x - 0.2)
     exact = 3.139062607254266
-    qx, qw = piessens(2, 0.2, nonsingular_N = 50)
+    qx, qw = map_singular(piessens, 2, 0.2, 0.0, 1.0, nonsingular_N = 50)
     est = np.sum(f(qx) * qw)
     np.testing.assert_almost_equal(exact, est)
 
-
+def test_piessens_4_5():
+    f = lambda x: np.exp(x - 4) / (x - 4.2)
+    exact = 3.139062607254266
+    qx, qw = map_singular(piessens, 20, 4.2, 4.0, 5.0, nonsingular_N = 50)
+    est = np.sum(f(qx) * qw)
+    np.testing.assert_almost_equal(exact, est)

@@ -1,11 +1,12 @@
 import numpy as np
-from gaussian_quad import gaussxw, gaussxwab
+from map import map_nonsing
+from gaussian_quad import gaussxw
 
 def piessens(N, x0, nonsingular_N = -1):
     """
     Quadrature points and weights for integrating a function with form
     f(x) / (x - x0)
-    on the interval [0, 1]
+    on the interval [-1, 1]
     Uses the 2N point gauss rule derived in Piessens (1970) Almost certainly
     suboptimal, but it's very simple and it works. Exact for polynomials of
     order 4N.
@@ -19,32 +20,22 @@ def piessens(N, x0, nonsingular_N = -1):
     # Split the interval into two sections. One is properly integrable.
     # The other is symmetric about the singularity point and must be
     # computed using as a cauchy principal value integral.
-    if x0 < 0.5:
-        proper_length = 1 - (2 * x0)
-        pv_length = 2 * x0
-        pv_start = 0.0
-        proper_start = 2 * x0
+    if x0 < 0.0:
+        pv_start = -1.0
+        pv_length = 2 * (x0 + 1)
+        proper_length = 2.0 - pv_length
+        proper_start = pv_start + pv_length
     else:
-        proper_start = 0.0
-        pv_start = -1.0 + 2 * x0
-        proper_length = -1.0 + 2 * x0
-        pv_length = 2.0 - 2 * x0
-
-    # Just check...
-    assert(pv_length + proper_length == 1.0)
-    assert(pv_start + pv_length == proper_start
-        or pv_start + pv_length == 1.0)
-    assert(proper_start + proper_length == pv_start
-        or proper_start + proper_length == 1.0)
-    assert(pv_start + pv_length / 2.0 == x0)
-
+        pv_length = 2 * (-x0 + 1)
+        pv_start = 1.0 - pv_length
+        proper_start = -1.0
+        proper_length = 2.0 - pv_length
 
     # the interval without the singularity
-    x, w = gaussxwab(nonsingular_N, proper_start, proper_start + proper_length)
+    x, w = map_nonsing(gaussxw, nonsingular_N,
+                       proper_start, proper_start + proper_length)
 
     # Get the points for the singular part using Piessen's method
-    # Change the code to use Longman's method, but Piessen's is clearly
-    # superior.
     x_sing, w_sing = piessen_method(N, pv_start, pv_length, x0)
 
     # Finished!

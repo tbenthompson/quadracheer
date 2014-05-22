@@ -1,7 +1,7 @@
 from math import sqrt, log
 import numpy as np
 import scipy.interpolate as spi
-from quadracheer.gaussian_quad import gaussxwab, gaussxw
+from quadracheer.gaussian_quad import gaussxw
 from quadracheer.telles_quasi_singular import telles_quasi_singular
 
 def test_interp_telles():

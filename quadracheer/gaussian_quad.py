@@ -58,9 +58,3 @@ def gaussxw(N):
     if not N in x_set.keys():
         _compute_pts(N)
     return x_set[N], w_set[N]
-
-def gaussxwab(N,a,b):
-    x, w = gaussxw(N)
-    return 0.5 * (b - a) * x + 0.5 * (b + a), \
-           0.5 * (b - a) * w
-
