@@ -10,13 +10,9 @@ the reference interval [-1, 1].
 Installation
 -----
 
-If you've downloaded the code, just run::
+Once you've downloaded the code, just run::
 
     $ python setup.py install 
-
-If you prefer to use pip, try::
-    
-    $ pip install quadracheer
 
 Tests
 -----

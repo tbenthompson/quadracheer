@@ -1,5 +1,5 @@
 import numpy as np
-from recursive_legendre import *
+from quadracheer.recursive_legendre import *
 
 def test_alpha():
     assert(alpha[0] == 1.0 / 1.0)
