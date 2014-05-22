@@ -99,4 +99,3 @@ def mu_1(k, m, ay, by):
         mu_1_km1 = mu_1_k
         mu_1_k = next_mu
     return mu_1_k
-
