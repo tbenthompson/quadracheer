@@ -64,4 +64,3 @@ def test_distant_value():
     exact = 9.68812e-8
     est = mu_1(9, 1, ay, by)
     np.testing.assert_almost_equal(est, exact, 5)
-    print est - exact

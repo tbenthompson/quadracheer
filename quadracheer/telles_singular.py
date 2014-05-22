@@ -15,7 +15,7 @@ def telles_singular(N, x0):
     "A SELF-ADAPTIVE CO-ORDINATE TRANSFORMATION FOR EFFICIENT NUMERICAL
     EVALUATION OF GENERAL BOUNDARY ELEMENT INTEGRALS", Telles, 1987.
     for a description of the method. I use the same notation adopted in that
-    paper.
+    paper. The interval of integration is [-1, 1]
 
     Note there is a printing error in the Jacobian of the transformation
     from gamma coordinates to eta coordinates in the Telles paper. The
@@ -54,3 +54,12 @@ def telles_singular(N, x0):
                 "singularity. Choose a different order of integration.")
 
     return x, w
+
+def telles_singular_ab(N, x0, a, b):
+    """
+    Map the telles quadrature to a different interval.
+    """
+    moved_x0 = (2 * (x0 - a) / b) - 1
+    x, w = telles_singular(N, moved_x0)
+    return 0.5 * (b - a) * x + 0.5 * (b + a), \
+           0.5 * (b - a) * w

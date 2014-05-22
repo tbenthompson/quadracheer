@@ -1,22 +1,8 @@
 from math import sqrt, log
 import numpy as np
 from quadracheer.gaussian_quad import gaussxwab, gaussxw
-from quadracheer.telles_singular import telles_singular
+from quadracheer.telles_singular import telles_singular, telles_singular_ab
 from quadracheer.telles_quasi_singular import telles_quasi_singular
-
-def test_gauss():
-    # test lgwt
-    x, w = gaussxwab(3, -1.0, 1.0)
-    # Exact values retrieved from the wikipedia page on Gaussian Quadrature
-    # The main function has been tested by the original author for a wide
-    # range of orders. But, this is just to check everything is still working
-    # properly
-    np.testing.assert_almost_equal(x[0], sqrt(3.0 / 5.0))
-    np.testing.assert_almost_equal(x[1], 0.0)
-    np.testing.assert_almost_equal(x[2], -sqrt(3.0 / 5.0))
-    np.testing.assert_almost_equal(w[0], (5.0 / 9.0))
-    np.testing.assert_almost_equal(w[1], (8.0 / 9.0))
-    np.testing.assert_almost_equal(w[2], (5.0 / 9.0))
 
 def test_telles_singular():
     #test telles quadrature with the example from the paper (page 964)
@@ -51,4 +37,29 @@ def test_quasi_singular():
     telles_error = abs(est_telles - exact) / exact * 100
     assert(telles_error < gauss_error / 1000)
 
+def test_QuadLogR():
+    f = lambda x: np.log(np.abs(x - 0.5))
+    exact = -1.0 - np.log(2.0)
+    tx, tw = telles_singular_ab(50, 0.5, 0, 1)
+    est = np.sum(f(tx) * tw)
+    np.testing.assert_almost_equal(exact, est, 4)
+
+def test_QuadLogR2():
+    f = lambda x: x ** 2 * np.log(np.abs(x - 0.9))
+    exact = -0.764714
+    tx, tw = telles_singular_ab(40, 0.9, 0, 1)
+    est = np.sum(f(tx) * tw)
+    np.testing.assert_almost_equal(exact, est, 4)
+
+def test_anotherLogRDouble_G11():
+    f = lambda x, y: (1 / (3 * np.pi)) *\
+        np.log(1.0 / np.abs(x - y)) * x * y
+    exact = 1 / (3 * np.pi)
+    gx, gw = gaussxwab(75, -1.0, 1.0)
+    sum = 0.0
+    for (pt, wt) in zip(gx, gw):
+        x, w = telles_singular(76, pt)
+        g = lambda x: f(x, pt)
+        sum += np.sum(g(x) * w * wt)
+    np.testing.assert_almost_equal(exact, sum, 5)
 
