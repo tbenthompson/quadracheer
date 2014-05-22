@@ -3,7 +3,7 @@ import numpy as np
 from gaussian_quad import gaussxw
 from telles_singular import telles_singular
 
-def telles_quasi_singular(N, x_nearest, D):
+def telles_quasi_singular(N, x_nearest, D = 0.0):
     """
     Inputs:
     N = the number of quadrature points to produce
