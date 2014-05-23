@@ -18,6 +18,11 @@ def rl_quad(degree, ay, by = 0, m = 1):
     return x, w
 
 def calculate_modified_moments(k_max, m, ay, by):
+    """
+    These are the integrals
+    \int_{-1}^{1} \frac{P_k(x)}{[(x - a_y)^2 + b_y^2]^(1/2) dx
+    computed by the recursive property of the Legendre polynomials.
+    """
     mu = np.zeros(k_max + 1)
     mu[0] = mu_1_0(ay, by)
     mu[1] = mu_1_1(ay, by)
@@ -29,7 +34,9 @@ def calculate_modified_moments(k_max, m, ay, by):
     return mu
 
 def gll_nodes(degree):
-    """ Returns the Gauss-Lobatto-Lagrande nodes on the interval [-1, 1]"""
+    """
+    Returns the Gauss-Lobatto-Lagrange nodes on the interval [-1, 1]
+    """
     x, w = lobatto_quad(degree)
     return x
 
@@ -38,6 +45,6 @@ def modified_vandermonde(pts):
     Creates the Legendre polynomial vandermonde matrix
     """
     degree = len(pts)
-    W = np.column_stack([ss.eval_legendre(i, pts)
+    W = np.row_stack([ss.eval_legendre(i, pts)
                          for i in range(degree)])
-    return W.T
+    return W
