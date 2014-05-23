@@ -2,6 +2,14 @@ import numpy as np
 from quadracheer.rl_quad import rl_quad, gll_nodes, modified_vandermonde
 from quadracheer.map import map_rl_quad
 
+def test_small_order_rl_quad():
+    for N in range(2, 4):
+        x, w = rl_quad(N, 0.5, m = 1, by = 0.5)
+        exact = [2.69982, 0.475878]
+        for i in range(len(exact)):
+            est = np.sum(w * x ** i)
+            np.testing.assert_almost_equal(exact[i], est, 5)
+
 def test_rl_quad():
     x, w = rl_quad(10, 0.5, m = 1, by = 0.5)
     exact = [2.69982, 0.475878, 0.826076, 0.238427, 0.470906,
