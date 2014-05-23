@@ -34,7 +34,15 @@ def mu_1_3(ay, by):
     return term1 + term2 + term3
 
 # The recursion for the legendre polynomials
-k = np.arange(40, dtype=np.float64)
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+# TODO: Remove this from the startup cost!
+k = np.arange(200, dtype=np.float64)
 alpha = (2 * k + 1) / (k + 1)
 beta = k / (k + 1)
 

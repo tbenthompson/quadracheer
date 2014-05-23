@@ -2,6 +2,7 @@ from math import sqrt, log
 import numpy as np
 from quadracheer.map import map_nonsing
 from quadracheer import gaussian_quad
+from quadracheer import lobatto_quad
 
 def test_gauss():
     # test lgwt
@@ -31,5 +32,14 @@ def test_QuadGauss():
     F = lambda x: x ** 3
     exact = F(1) - F(0)
     x, w = map_nonsing(gaussian_quad.gaussxw, 2, 0, 1)
+    est = np.sum(f(x) * w)
+    np.testing.assert_almost_equal(exact, est)
+
+def test_lobatto():
+    f = lambda x: 12 * x ** 11
+    F = lambda x: x ** 12
+    exact = F(1) - F(0)
+    x, w = map_nonsing(lobatto_quad, 7, 0, 1)
+    assert(len(x) == 7)
     est = np.sum(f(x) * w)
     np.testing.assert_almost_equal(exact, est)
