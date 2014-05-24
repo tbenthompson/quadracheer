@@ -12,13 +12,13 @@ Installation
 
 Once you've downloaded the code, just run::
 
-    $ python setup.py install 
+    python setup.py install 
 
 Tests
 -----
 
 To run the tests, type::
 
-    $ ./pytest
+    ./pytest
     
 from the root directory. This assumes that py.test is installed. 
