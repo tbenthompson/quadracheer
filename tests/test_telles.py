@@ -70,4 +70,3 @@ def test_anotherLogRDouble_G11():
         g = lambda x: f(x, pt)
         sum += np.sum(g(x) * w * wt)
     np.testing.assert_almost_equal(exact, sum, 5)
-

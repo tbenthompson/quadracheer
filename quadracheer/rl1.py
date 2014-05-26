@@ -81,7 +81,7 @@ def E(k, m, ay, by):
     denom = (2 * k - 1) - (m - 2) * alpha[k - 1]
     return numer / denom
 
-def mu_1_kp1(k, m, ay, by, mu_1_k, mu_1_km1, mu_1_km2, mu_1_km3):
+def mu_kp1(k, m, ay, by, mu_1_k, mu_1_km1, mu_1_km2, mu_1_km3):
     Ak = A(k, m, ay, by)
     Bk = B(k, m, ay, by)
     Ck = C(k, m, ay, by)
@@ -101,7 +101,7 @@ def mu_1(k, m, ay, by):
     mu_1_km1 = mu_1_2(ay, by)
     mu_1_k = mu_1_3(ay, by)
     for cur_k in range(3, k):
-        next_mu = mu_1_kp1(cur_k, 1, ay, by, mu_1_k, mu_1_km1, mu_1_km2, mu_1_km3)
+        next_mu = mu_kp1(cur_k, 1, ay, by, mu_1_k, mu_1_km1, mu_1_km2, mu_1_km3)
         mu_1_km3 = mu_1_km2
         mu_1_km2 = mu_1_km1
         mu_1_km1 = mu_1_k

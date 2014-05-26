@@ -5,12 +5,13 @@ from quadracheer import gaussian_quad
 from quadracheer import lobatto_quad
 
 def test_gauss():
-    # test lgwt
+    """
+    Exact values retrieved from the wikipedia page on Gaussian Quadrature
+    The main function has been tested by the original author for a wide
+    range of orders. But, this is just to check everything is still working
+    properly
+    """
     x, w = map_nonsing(gaussian_quad.gaussxw, 3, -1.0, 1.0)
-    # Exact values retrieved from the wikipedia page on Gaussian Quadrature
-    # The main function has been tested by the original author for a wide
-    # range of orders. But, this is just to check everything is still working
-    # properly
     np.testing.assert_almost_equal(x[0], sqrt(3.0 / 5.0))
     np.testing.assert_almost_equal(x[1], 0.0)
     np.testing.assert_almost_equal(x[2], -sqrt(3.0 / 5.0))
@@ -20,6 +21,10 @@ def test_gauss():
 
 
 def test_build_sets():
+    """
+    Tests whether the Gaussian quadrature method is properly storing
+    the orders that have already been computed
+    """
     x, w = map_nonsing(gaussian_quad.gaussxw, 3, -1.0, 1.0)
     x2, w2 = map_nonsing(gaussian_quad.gaussxw, 12, -1.0, 1.0)
     np.testing.assert_almost_equal(x, gaussian_quad.x_set[3])
