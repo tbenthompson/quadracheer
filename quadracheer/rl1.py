@@ -8,9 +8,9 @@ application!
 # The starting value definitions are taken from the Aimi and Diligenti 2002
 # paper
 def k1(ay, by):
-    return sqrt((ay - 1) ** 2 + by ** 2)
+    return np.sqrt((ay - 1) ** 2 + by ** 2)
 def k2(ay, by):
-    return sqrt((ay + 1) ** 2 + by ** 2)
+    return np.sqrt((ay + 1) ** 2 + by ** 2)
 
 def mu_1_0(ay, by):
     numer = k1(ay, by) + 1 - ay

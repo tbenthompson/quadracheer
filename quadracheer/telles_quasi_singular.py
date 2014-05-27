@@ -1,4 +1,4 @@
-from math import sqrt, copysign
+from math import sqrt, copysign, log
 import numpy as np
 from gaussian_quad import gaussxw
 from telles_singular import telles_singular
@@ -26,6 +26,7 @@ def telles_quasi_singular(N, x_nearest, D = 0.0):
     should increase further from the singularity.
     """
 
+
     # If we are less than 0.05 from the singularity, just use the singular
     # telles quadrature method.
     if D < 0.05:
@@ -40,9 +41,10 @@ def telles_quasi_singular(N, x_nearest, D = 0.0):
         r_bar = 0.893 + 0.0832 * log(D)
     else:
         # Far enough away that we should just use gauss quadrature.
-        x, w = gaussxw(N, 0.0, 1.0)
+        x, w = gaussxw(N)
         return x, w
 
+    eta_bar = x_nearest
     # The following is an almost direct transcription of the equation in
     # the article cited above.
     q_factor = (1.0 / (2 * (1 + 2 * r_bar)))
