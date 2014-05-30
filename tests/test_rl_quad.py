@@ -62,7 +62,7 @@ def test_inv_mod_vander():
     assert(np.linalg.cond(W) < 20.1)
 
 def test_mapped_rl_quad():
-    x, w = map_rl_quad(rl_quad, 10, 0.5, 0.5, 1.0, 2.0)
+    x, w = map_rl_quad(rl_quad, 10, 0.5, 0.5, 1, 1.0, 2.0)
     exact = [0.9370728722124352,
              1.342568485003826,
              2.000243585190683, \
@@ -78,7 +78,7 @@ def test_mapped_rl_quad():
         np.testing.assert_almost_equal(exact[i], est, 10)
 
 def test_mapped_rl_quad2():
-    x, w = map_rl_quad(rl_quad, 10, 0.2, 0.3, 0.0, 1.0)
+    x, w = map_rl_quad(rl_quad, 10, 0.2, 0.3, 1, 0.0, 1.0)
     exact = [2.332556553293539,
              0.9603565576440610,
              0.5636909785950152, \
@@ -92,3 +92,19 @@ def test_mapped_rl_quad2():
     for i in range(len(exact)):
         est = np.sum(w * x ** i)
         np.testing.assert_almost_equal(exact[i], est, 9)
+
+def test_mapped_rl_quad_with_m5():
+    x, w = map_rl_quad(rl_quad, 10, 0.2, 0.3, 5, 0.0, 1.0)
+    exact = [143.2724199247024,
+             35.23159050009458,
+             12.03421465198119, \
+             5.150067213377777,
+             2.641021685444761,
+             1.566290120735974, \
+             1.039722729869763,
+             0.7510326686133133,
+             0.5773568932540537, \
+             0.4646714666702138]
+    est = [np.sum(w * x ** i) for i in range(len(exact))]
+    # print [e0 / e1 for e0, e1 in zip(est, exact)]
+    np.testing.assert_almost_equal(exact, est, 10)
