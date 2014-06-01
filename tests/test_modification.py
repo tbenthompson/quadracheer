@@ -1,7 +1,8 @@
 import numpy as np
 from math import log
-from quadracheer.recursive_legendre import legendre_integrals,\
-                                           modified_moments
+from quadracheer.legendre import legendre_integrals
+from quadracheer.rl135 import rl1
+from quadracheer.recursion import modified_moments
 from quadracheer.modification import modify_times_x_minus_a,\
                                      modify_divide_x_minus_a,\
                                      modify_divide_r2
@@ -70,7 +71,7 @@ def test_r3():
         -0.005390367432553238, -0.005828732964372520, 0.0002538145298338417]
     a = 0.213
     b = 0.85
-    moments = modified_moments(8, 1, a, b)
+    moments = modified_moments(rl1, 8, a, b)
     est = modify_divide_r2(8, moments, a, b, correct[0], correct[1])
     np.testing.assert_almost_equal(correct, est)
 
@@ -81,9 +82,19 @@ def test_r5():
             -0.01293167540460619, -0.01866314618738899, 0.0001560375793864460]
     a = 0.213
     b = 0.85
-    moments = modified_moments(8, 1, a, b)
+    moments = modified_moments(rl1, 8, a, b)
     r3 = modify_divide_r2(8, moments, a, b,
                           2.073823077631299,
                           0.2535989787775645)
     est = modify_divide_r2(8, r3, a, b, correct[0], correct[1])
     np.testing.assert_almost_equal(correct, est)
+
+# def test_more_values():
+#     est = modified_moments(15, 5, 1.2, 1.2)
+#     exact = [0.236037, 0.119291, 0.0349751, 0.00321571,
+#             -0.00239632, -0.00140269, \
+#             -0.000352242, -4.30148*10**-6, 0.0000340514, 0.0000145451, \
+#             2.60414*10**-6, -3.46627*10**-7, -2.41911*10**-7,
+#             -2.52412*10**-6]
+#     for i in range(14):
+#         np.testing.assert_almost_equal(est[i], exact[i], 5)

@@ -1,5 +1,5 @@
 from math import log
-from recursive_legendre import alpha, beta
+from legendre import alpha, beta
 
 
 def modify_times_x_minus_a(k_max, moments, a):

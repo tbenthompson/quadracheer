@@ -1,25 +1,27 @@
 import numpy as np
-from quadracheer.rl_quad import rl_quad, gll_nodes, modified_vandermonde
+from quadracheer.recursion import recursive_quad,\
+                gll_nodes, modified_vandermonde
+from quadracheer.rl135 import rl1
 from quadracheer.map import map_rl_quad
 
-def test_small_order_rl_quad():
+def test_small_order_recursive_quad():
     for N in range(2, 4):
-        x, w = rl_quad(N, 0.5, m = 1, by = 0.5)
+        x, w = recursive_quad(rl1, N, 0.5, 0.5)
         exact = [2.69982, 0.475878]
         for i in range(len(exact)):
             est = np.sum(w * x ** i)
             np.testing.assert_almost_equal(exact[i], est, 5)
 
-def test_rl_quad():
-    x, w = rl_quad(10, 0.5, m = 1, by = 0.5)
+def test_recursive_quad():
+    x, w = recursive_quad(rl1, 10, 0.5, 0.5)
     exact = [2.69982, 0.475878, 0.826076, 0.238427, 0.470906,
              0.153639, 0.325999, 0.112006, 0.248412, 0.0877162]
     for i in range(10):
         est = np.sum(w * x ** i)
         np.testing.assert_almost_equal(exact[i], est, 5)
 
-def test_rl_quad2():
-    x, w = rl_quad(10, 0.5, m = 1, by = 2.5)
+def test_recursive_quad2():
+    x, w = recursive_quad(rl1, 10, 0.5, 2.5)
     exact = [0.7675150090814903,
              0.01779131391448664,
              0.2514125580305381,
@@ -34,9 +36,9 @@ def test_rl_quad2():
         est = np.sum(w * x ** i)
         np.testing.assert_almost_equal(exact[i], est, 11)
 
-def test_high_order_rl_quad():
+def test_high_order_recursive_quad():
     N = 100
-    x, w = rl_quad(N, 0.5, m = 1, by = 0.5)
+    x, w = recursive_quad(rl1, N, 0.5, 0.5)
     exact = dict()
     # I get 10 digits at N = 100
     exact[100] = 0.007920933265917480
@@ -61,8 +63,8 @@ def test_inv_mod_vander():
     W = modified_vandermonde(x)
     assert(np.linalg.cond(W) < 20.1)
 
-def test_mapped_rl_quad():
-    x, w = map_rl_quad(rl_quad, 10, 0.5, 0.5, 1, 1.0, 2.0)
+def test_mapped_recursive_quad():
+    x, w = map_rl_quad(recursive_quad, rl1, 10, 0.5, 0.5, 1.0, 1.0, 2.0)
     exact = [0.9370728722124352,
              1.342568485003826,
              2.000243585190683, \
@@ -77,8 +79,8 @@ def test_mapped_rl_quad():
         est = np.sum(w * x ** i)
         np.testing.assert_almost_equal(exact[i], est, 10)
 
-def test_mapped_rl_quad2():
-    x, w = map_rl_quad(rl_quad, 10, 0.2, 0.3, 1, 0.0, 1.0)
+def test_mapped_recursive_quad2():
+    x, w = map_rl_quad(recursive_quad, rl1, 10, 0.2, 0.3, 1.0, 0.0, 1.0)
     exact = [2.332556553293539,
              0.9603565576440610,
              0.5636909785950152, \
@@ -92,19 +94,19 @@ def test_mapped_rl_quad2():
     for i in range(len(exact)):
         est = np.sum(w * x ** i)
         np.testing.assert_almost_equal(exact[i], est, 9)
-
-def test_mapped_rl_quad_with_m5():
-    x, w = map_rl_quad(rl_quad, 10, 0.2, 0.3, 5, 0.0, 1.0)
-    exact = [143.2724199247024,
-             35.23159050009458,
-             12.03421465198119, \
-             5.150067213377777,
-             2.641021685444761,
-             1.566290120735974, \
-             1.039722729869763,
-             0.7510326686133133,
-             0.5773568932540537, \
-             0.4646714666702138]
-    est = [np.sum(w * x ** i) for i in range(len(exact))]
-    # print [e0 / e1 for e0, e1 in zip(est, exact)]
-    np.testing.assert_almost_equal(exact, est, 10)
+#
+# def test_mapped_recursive_quad_with_m5():
+#     x, w = map_rl_quad(recursive_quad, rl1, 10, 0.2, 0.3, 5.0, 0.0, 1.0)
+#     exact = [143.2724199247024,
+#              35.23159050009458,
+#              12.03421465198119, \
+#              5.150067213377777,
+#              2.641021685444761,
+#              1.566290120735974, \
+#              1.039722729869763,
+#              0.7510326686133133,
+#              0.5773568932540537, \
+#              0.4646714666702138]
+#     est = [np.sum(w * x ** i) for i in range(len(exact))]
+#     # print [e0 / e1 for e0, e1 in zip(est, exact)]
+#     np.testing.assert_almost_equal(exact, est, 10)
