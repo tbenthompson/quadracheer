@@ -24,15 +24,13 @@ def modified_moments(descriptor, k_max, *args):
     k_max is forced to be >= 1
     """
     moments = []
+    recursion_width = len(descriptor["recursion_fncs"])
     for cur_k in range(k_max + 1):
         if cur_k in descriptor:
             moments.append(descriptor[cur_k](*args))
             continue
         moments.append(next_mu(descriptor, cur_k - 1,
-                                     [moments[cur_k - 1],
-                                     moments[cur_k - 2],
-                                     moments[cur_k - 3],
-                                     moments[cur_k - 4]],
+            moments[cur_k - recursion_width:cur_k][::-1],
                                      *args))
     return moments
 

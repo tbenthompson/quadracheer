@@ -1,6 +1,6 @@
 import numpy as np
 from quadracheer.recursion import modified_moments
-from quadracheer.rl135 import rl1, mu_5_0, mu_5_1
+from quadracheer.rl135 import rl1, mu_5_0, mu_5_1, mu_3_0, mu_3_1
 
 def test_initm10():
     est = rl1[0](1.2, 1.2)
@@ -41,6 +41,16 @@ def test_initm13_singular():
     est = rl1[3](-0.01, -0.01)
     exact = 0.103966
     np.testing.assert_almost_equal(est, exact, 5)
+
+def test_initm30():
+    est = mu_3_0(0.213, 0.85)
+    exact = 2.073823077631299
+    np.testing.assert_almost_equal(est, exact, 11)
+
+def test_initm31():
+    est = mu_3_1(0.213, 0.85)
+    exact = 0.2535989787775645
+    np.testing.assert_almost_equal(est, exact, 11)
 
 def test_value():
     ay = 0.05

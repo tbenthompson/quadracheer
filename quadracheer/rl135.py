@@ -62,6 +62,14 @@ def mu_1_3(ay, by):
     return term1 + term2 + term3
 rl1[3] = mu_1_3
 
+def mu_3_0(ay, by):
+    term1 = (1 - ay) / (by ** 2 * k1(ay, by))
+    term2 = (1 + ay) / (by ** 2 * k2(ay, by))
+    return term1 + term2
+
+def mu_3_1(ay, by):
+    return -((ay**2 - ay + by**2)*sqrt(ay**2 + 2*ay + by**2 + 1) - (ay**2 + ay + by**2)*sqrt(ay**2 - 2*ay + by**2 + 1))/(by**2*sqrt(ay**2 - 2*ay + by**2 + 1)*sqrt(ay**2 + 2*ay + by**2 + 1))
+
 def mu_5_0(ay, by):
     term1 = (1 - ay) * (by ** 2 + 2 * k1(ay, by) ** 2) / (3 * by ** 4 * k1(ay, by) ** 3)
     term2 = (1 + ay) * (by ** 2 + 2 * k2(ay, by) ** 2) / (3 * by ** 4 * k2(ay, by) ** 3)
