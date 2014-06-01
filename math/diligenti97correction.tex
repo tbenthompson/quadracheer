@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9.5in}
+\setlength{\footskip}{.5in}
+
+\setlength{\voffset}{-.5in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{.5in}
+\setlength{\headsep}{12pt}
+
+%\usepackage{savetrees}
+\usepackage{rotating}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr,lastpage}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[round]{natbib}
+\usepackage{rotating}
+\usepackage{mathrsfs}
+\usepackage{tipa}
+\usepackage{overpic}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\td}[2]{\frac{d #1}{d #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2 \partial #2}}
+\newcommand{\expv}[1]{\left \langle #1 \right \rangle}
+\newcommand{\tensort}[1]{\underline{\underline{#1}}}
+\newcommand{\erf}[1]{\mbox{erf}{\left( {#1}\right)}}
+\newcommand{\erfc}[1]{\mbox{erfc}{\left( {#1}\right)}}
+\newcommand{\ands}{ \ \ \ \mbox{ and } \ \ \ }
+\newcommand{\spword}[1]{ \ \ \ \mbox{ {#1} } \ \ \ }
+
+\begin{document}
+% \title{}
+% \author{}
+% \date{}
+% \maketitle
+% \newpage 
+ 
+% \tableofcontents
+% \listoffigures
+
+Correction of the formula for $\bar{m}_2$ on page 35 of Diligenti, Monegato
+Integral evaluation in the BEM solution of (hyper)singular integral 
+equations. 2D problems on polygonal domains. 1997 J. Computational and 
+Applied Mathematics.
+
+For Legendre Polynomials. Re-derive using $k_1^{(1)}$ and $k_0^{(1)}$ if a 
+different basis is desired. Here, $k_1^{(1)} = 1$ and $k_0^{(1)} = 0$
+
+\begin{align}
+    \bar{m}_2 = \int_{-1}^{1} \frac{K(x,y)}{r^2} P_2(x) dx \\
+    = \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} x P_1(x) dx - \beta_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} P_0(x) dx \\
+    = \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} x^2  dx - \beta_1 \bar{m}_0   \\
+    = \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (x^2 - 2ax + a^2 + b^2) dx - 
+      \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (-2ax + a^2 + b^2)  dx -
+      \beta_1 \bar{m}_0 \\
+    (r^2 = x^2 - 2ax + a^2 + b^2) \\
+    = \alpha_1 \int_{-1}^{1} K(x,y) dx +
+      \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} 2ax dx -
+      \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (a^2 + b^2) dx -
+      \beta_1 \bar{m}_0 \\
+    = \alpha_1 m_0 +
+      2 a \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} P_1(x) dx -
+      \alpha_1 (a^2 + b^2) \bar{m}_0 -
+      \beta_1 \bar{m}_0 \\
+    = \alpha_1 (m_0 + 2 a \bar{m}_1) - 
+    (\alpha_1(a^2 + b^2) + \beta_1) \bar{m}_0
+\end{align}
+\end{document}

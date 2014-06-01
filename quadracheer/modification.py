@@ -89,8 +89,8 @@ def modify_divide_r(k_max, moments, a, b, first_term, second_term):
     new_list.append(second_term)
 
     # Compute m_2 explicitly
-    term1 = alpha(0) * alpha(1) * (moments[0] + a * new_list[1])
-    term2 = -(alpha(0) * alpha(1) * (a ** 2 + b ** 2) + beta(1)) * new_list[0]
+    term1 = alpha(1) * (moments[0] + 2 * a * new_list[1])
+    term2 = -(alpha(1) * (a ** 2 + b ** 2) + beta(1)) * new_list[0]
     m_2 = term1 + term2
     new_list.append(m_2)
 

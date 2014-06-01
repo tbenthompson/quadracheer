@@ -26,7 +26,7 @@ def test_div_x_minus_a():
 def test_div_r():
     moments = legendre_integrals(8)
     a = 0.5
-    b = 0.5
+    b = 1.2
     correct = [1.075705420225906,
                0.1474037455542261,
                -0.04366033205431969,
