@@ -1,0 +1,51 @@
+\documentclass[a4paper,12pt]{article}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9.5in}
+\setlength{\footskip}{.5in}
+
+\setlength{\voffset}{-.5in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{.5in}
+\setlength{\headsep}{12pt}
+
+%\usepackage{savetrees}
+\usepackage{rotating}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr,lastpage}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[round]{natbib}
+\usepackage{rotating}
+\usepackage{mathrsfs}
+\usepackage{tipa}
+\usepackage{overpic}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\td}[2]{\frac{d #1}{d #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2 \partial #2}}
+\newcommand{\expv}[1]{\left \langle #1 \right \rangle}
+\newcommand{\tensort}[1]{\underline{\underline{#1}}}
+\newcommand{\erf}[1]{\mbox{erf}{\left( {#1}\right)}}
+\newcommand{\erfc}[1]{\mbox{erfc}{\left( {#1}\right)}}
+\newcommand{\ands}{ \ \ \ \mbox{ and } \ \ \ }
+\newcommand{\spword}[1]{ \ \ \ \mbox{ {#1} } \ \ \ }
+
+\begin{document}
+Pieces:
+\begin{enumerate}
+        \item Integrate the kernels against the Legendre polynomials exactly.
+        \item Use the rules from Diligenti 1997 in 2D. In 3D, I will need to develop new double integral product rules.
+        \item Use the generalized vandermonde matrix to convert back and forth between Legendre Polynomials and various representations as nodal Lagrange basis functions. 
+        \item Conversion between nodal and Legendre form can be done in $O(p^2)$ by multiplying by the generalized Vandermonde or its inverse.
+        \item Integrals of derivatives of Legendre Polynomials against a kernel can easily be rewritten into a recurrence.
+        \item I think both the original basis and the derivative of the original basis can be represented in nodal form. To convert integrals of the nodal 
+        \item In 3D, the $p^2 \times p^2$ generalized Vandermonde matrix can be written as the Kronecker product of two $p \times p$ generalized Vandermonde matrices. 
+\end{enumerate}
+
+\end{document}

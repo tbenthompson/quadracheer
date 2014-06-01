@@ -73,7 +73,7 @@ def next_q_i(k, a, b, q_i, q_r):
     term3 = -beta(k) * q_i[k - 1]
     return term1 + term2 + term3
 
-def modify_divide_r(k_max, moments, a, b, first_term, second_term):
+def modify_divide_r2(k_max, moments, a, b, first_term, second_term):
     """
     Create the modified moments for k(x,y) * Pn / ((x - a)^2 + b^2) from
     the modified moments for k(x, y) * Pn

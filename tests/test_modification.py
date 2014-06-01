@@ -1,9 +1,10 @@
 import numpy as np
 from math import log
-from quadracheer.recursive_legendre import legendre_integrals
+from quadracheer.recursive_legendre import legendre_integrals,\
+                                           modified_moments
 from quadracheer.modification import modify_times_x_minus_a,\
                                      modify_divide_x_minus_a,\
-                                     modify_divide_r
+                                     modify_divide_r2
 
 def test_mult_x_minus_a():
     moments = legendre_integrals(5)
@@ -23,7 +24,7 @@ def test_div_x_minus_a():
                -0.8803490519735331]
     np.testing.assert_almost_equal(correct, est)
 
-def test_div_r():
+def test_div_r2():
     moments = legendre_integrals(8)
     a = 0.5
     b = 1.2
@@ -36,5 +37,53 @@ def test_div_r():
                0.0003847499889184325,
                -0.0001317394357582433,
                -0.00006769643570114308]
-    est = modify_divide_r(8, moments, a, b, correct[0], correct[1])
+    est = modify_divide_r2(8, moments, a, b, correct[0], correct[1])
+    np.testing.assert_almost_equal(correct, est)
+
+def test_div_r4():
+    moments = legendre_integrals(8)
+    a = 0.5
+    b = 1.2
+    correct = [0.6173845393861046, 0.1483356365409694, -0.03770049188677398, \
+    -0.02905919230092682, -0.001801984951851534, 0.003509117545068981, \
+    0.001056188292853719, -0.0002247265640304056, -0.0001910931757665019]
+    r2 = modify_divide_r2(8, moments, a, b,
+                          1.075705420225906,
+                          0.1474037455542261)
+    est = modify_divide_r2(8, r2, a, b, correct[0], correct[1])
+    np.testing.assert_almost_equal(correct, est)
+
+def test_x_minus_a_over_r2():
+    moments = legendre_integrals(9)
+    a = 0.5
+    b = 1.2
+    xma = modify_times_x_minus_a(8, moments, a)
+    correct = [-0.3904489645587269, 0.2557597125953320, 0.06865217632870157, \
+        -0.008511531192587127, -0.007950872775398451, -0.0007266762296354132, \
+        0.0006627180067297806, 0.0002093149470004469, -0.00002794901652839316]
+    est = modify_divide_r2(8, xma, a, b, correct[0], correct[1])
+    np.testing.assert_almost_equal(correct, est)
+
+def test_r3():
+    correct = [2.073823077631299, 0.2535989787775645, -0.2911113387007714, \
+        -0.08946188432319288, 0.04410566356714894, 0.02448735642709018, \
+        -0.005390367432553238, -0.005828732964372520, 0.0002538145298338417]
+    a = 0.213
+    b = 0.85
+    moments = modified_moments(8, 1, a, b)
+    est = modify_divide_r2(8, moments, a, b, correct[0], correct[1])
+    np.testing.assert_almost_equal(correct, est)
+
+
+def test_r5():
+    correct = [2.319371017897694, 0.3821621948981323, -0.4762089061831612, \
+            -0.1876037135232636, 0.09309106929258391, 0.06515743698013002, \
+            -0.01293167540460619, -0.01866314618738899, 0.0001560375793864460]
+    a = 0.213
+    b = 0.85
+    moments = modified_moments(8, 1, a, b)
+    r3 = modify_divide_r2(8, moments, a, b,
+                          2.073823077631299,
+                          0.2535989787775645)
+    est = modify_divide_r2(8, r3, a, b, correct[0], correct[1])
     np.testing.assert_almost_equal(correct, est)
