@@ -1,6 +1,6 @@
 import numpy as np
-from quadracheer.recursive_legendre import init_mu, modified_moments,\
-        k1, k2, alpha
+from quadracheer.recursive_legendre import mu_proc, modified_moments,\
+        alpha
 from quadracheer.rl1 import *
 
 def test_alpha():
@@ -11,42 +11,42 @@ def test_alpha():
 
 # Exact integrals computed using mathematica
 def test_initm10():
-    est = init_mu[1][0](1.2, 1.2, k1(1.2, 1.2), k2(1.2, 1.2))
+    est = mu_proc[1][0](1.2, 1.2)
     exact = 1.20061
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm10_singular():
-    est = init_mu[1][0](0.8, 0.8, k1(0.8, 0.8), k2(0.8, 0.8))
+    est = mu_proc[1][0](0.8, 0.8)
     exact = 1.79762
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm11():
-    est = init_mu[1][1](1.2, 1.2, k1(1.2, 1.2), k2(1.2, 1.2))
+    est = mu_proc[1][1](1.2, 1.2)
     exact = 0.151292
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm11_singular():
-    est = init_mu[1][1](0.6, 0.6, k1(0.6, 0.6), k2(0.6, 0.6))
+    est = mu_proc[1][1](0.6, 0.6)
     exact = 0.411843
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm12():
-    est = init_mu[1][2](1.2, 1.2, k1(1.2, 1.2), k2(1.2, 1.2))
+    est = mu_proc[1][2](1.2, 1.2)
     exact = 0.00677433
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm12_singular():
-    est = init_mu[1][2](0.01, 0.01, k1(0.01, 0.01), k2(0.01, 0.01))
+    est = mu_proc[1][2](0.01, 0.01)
     exact = -3.79787
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm13():
-    est = init_mu[1][3](1.2, 1.2, k1(1.2, 1.2), k2(1.2, 1.2))
+    est = mu_proc[1][3](1.2, 1.2)
     exact = -0.00407733
     np.testing.assert_almost_equal(est, exact, 5)
 
 def test_initm13_singular():
-    est = init_mu[1][3](-0.01, -0.01, k1(-0.01, -0.01), k2(-0.01, -0.01))
+    est = mu_proc[1][3](-0.01, -0.01)
     exact = 0.103966
     np.testing.assert_almost_equal(est, exact, 5)
 

@@ -1,13 +1,13 @@
 import numpy as np
 from quadracheer.rl1 import k1, k2
 from quadracheer.rl5 import *
-from quadracheer.recursive_legendre import modified_moments, init_mu
+from quadracheer.recursive_legendre import modified_moments, mu_proc
 
 def test_initm5():
     ay, by = (1.2, 1.2)
     exact = [0.236037, 0.119291, 0.0349751, 0.00321571, -0.00239632]
     for i in range(5):
-        est = init_mu[5][i](ay, by, k1(ay, by), k2(ay, by))
+        est = mu_proc[5][i](ay, by)
         np.testing.assert_almost_equal(est, exact[i], 5)
 
 def test_more_values():

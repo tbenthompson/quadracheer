@@ -46,7 +46,7 @@ def test_high_order_rl_quad():
     exact[150] = 0.005257679877042412
     exact[200] = 0.003934647991362962
     est = np.sum(w * x ** (N - 1))
-    np.testing.assert_almost_equal(exact[N], est, 10)
+    np.testing.assert_almost_equal(exact[N], est, 9)
 
 
 def test_gll_nodes():
