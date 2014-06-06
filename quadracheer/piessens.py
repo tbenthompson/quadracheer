@@ -1,5 +1,5 @@
 import numpy as np
-from map import map_nonsing
+from map import map_pts_wts
 from gaussian_quad import gaussxw
 
 def piessens(N, x0, nonsingular_N = -1):
@@ -32,8 +32,8 @@ def piessens(N, x0, nonsingular_N = -1):
         proper_length = 2.0 - pv_length
 
     # the interval without the singularity
-    x, w = map_nonsing(gaussxw, nonsingular_N,
-                       proper_start, proper_start + proper_length)
+    gx, gw = gaussxw(nonsingular_N)
+    x, w = map_pts_wts(gx, gw, proper_start, proper_start + proper_length)
 
     # Get the points for the singular part using Piessen's method
     x_sing, w_sing = piessen_method(N, pv_start, pv_length, x0)

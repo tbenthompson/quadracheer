@@ -1,19 +1,21 @@
 import numpy as np
 from quadracheer.recursion import recursive_quad,\
-                gll_nodes, modified_vandermonde
+                gll_nodes, modified_vandermonde, modified_moments
 from quadracheer.rl135 import rl1
-from quadracheer.map import map_rl_quad
+from quadracheer.map import map_pts_wts, map_singular_pt,\
+        map_distance_to_interval, map_weights_by_inv_power
 
 def test_small_order_recursive_quad():
     for N in range(2, 4):
-        x, w = recursive_quad(rl1, N, 0.5, 0.5)
+        moments = modified_moments(rl1, N - 1, 0.5, 0.5)
+        x, w = recursive_quad(moments)
         exact = [2.69982, 0.475878]
         for i in range(len(exact)):
             est = np.sum(w * x ** i)
             np.testing.assert_almost_equal(exact[i], est, 5)
 
 def test_recursive_quad():
-    x, w = recursive_quad(rl1, 10, 0.5, 0.5)
+    x, w = recursive_quad(modified_moments(rl1, 9, 0.5, 0.5))
     exact = [2.69982, 0.475878, 0.826076, 0.238427, 0.470906,
              0.153639, 0.325999, 0.112006, 0.248412, 0.0877162]
     for i in range(10):
@@ -21,7 +23,7 @@ def test_recursive_quad():
         np.testing.assert_almost_equal(exact[i], est, 5)
 
 def test_recursive_quad2():
-    x, w = recursive_quad(rl1, 10, 0.5, 2.5)
+    x, w = recursive_quad(modified_moments(rl1, 9, 0.5, 2.5))
     exact = [0.7675150090814903,
              0.01779131391448664,
              0.2514125580305381,
@@ -38,7 +40,7 @@ def test_recursive_quad2():
 
 def test_high_order_recursive_quad():
     N = 100
-    x, w = recursive_quad(rl1, N, 0.5, 0.5)
+    x, w = recursive_quad(modified_moments(rl1, N - 1, 0.5, 0.5))
     exact = dict()
     # I get 10 digits at N = 100
     exact[100] = 0.007920933265917480
@@ -64,7 +66,14 @@ def test_inv_mod_vander():
     assert(np.linalg.cond(W) < 20.1)
 
 def test_mapped_recursive_quad():
-    x, w = map_rl_quad(recursive_quad, rl1, 10, 0.5, 0.5, 1.0, 1.0, 2.0)
+
+    mapped_ay = map_singular_pt(0.5, 1.0, 2.0)
+    mapped_by = map_distance_to_interval(0.5, 1.0, 2.0)
+    moments = modified_moments(rl1, 10, mapped_ay, mapped_by)
+    x, w = recursive_quad(moments)
+    x, w = map_pts_wts(x, w, 1.0, 2.0)
+    w = map_weights_by_inv_power(w, 1.0, 1.0, 2.0)
+
     exact = [0.9370728722124352,
              1.342568485003826,
              2.000243585190683, \
@@ -80,7 +89,13 @@ def test_mapped_recursive_quad():
         np.testing.assert_almost_equal(exact[i], est, 10)
 
 def test_mapped_recursive_quad2():
-    x, w = map_rl_quad(recursive_quad, rl1, 10, 0.2, 0.3, 1.0, 0.0, 1.0)
+    mapped_ay = map_singular_pt(0.2, 0.0, 1.0)
+    mapped_by = map_distance_to_interval(0.3, 0.0, 1.0)
+    moments = modified_moments(rl1, 10, mapped_ay, mapped_by)
+    x, w = recursive_quad(moments)
+    x, w = map_pts_wts(x, w, 0.0, 1.0)
+    w = map_weights_by_inv_power(w, 1.0, 0.0, 1.0)
+
     exact = [2.332556553293539,
              0.9603565576440610,
              0.5636909785950152, \

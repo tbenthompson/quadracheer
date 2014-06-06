@@ -1,6 +1,8 @@
 import numpy as np
 from quadracheer.recursion import modified_moments
-from quadracheer.rl135 import rl1, mu_5_0, mu_5_1, mu_3_0, mu_3_1
+from quadracheer.rl135 import rl1, mu_5_0, mu_5_1, mu_3_0, mu_3_1,\
+                                   mu_2_0, mu_2_1, mu_4_0, mu_4_1,\
+                                   mu_6_0, mu_6_1
 
 def test_initm10():
     est = rl1[0](1.2, 1.2)
@@ -42,6 +44,17 @@ def test_initm13_singular():
     exact = 0.103966
     np.testing.assert_almost_equal(est, exact, 5)
 
+def test_initm20():
+    exact = 4.068887871591405
+    est = mu_2_0(0.5, 0.5)
+    np.testing.assert_almost_equal(est, exact, 15)
+
+def test_initm21():
+    exact = 1.229724979578653
+    est = mu_2_1(0.5, 0.5)
+    np.testing.assert_almost_equal(est, exact, 15)
+
+
 def test_initm30():
     est = mu_3_0(0.213, 0.85)
     exact = 2.073823077631299
@@ -51,6 +64,27 @@ def test_initm31():
     est = mu_3_1(0.213, 0.85)
     exact = 0.2535989787775645
     np.testing.assert_almost_equal(est, exact, 11)
+
+def test_initm40():
+    exact = 11.33777574318281
+    est = mu_4_0(0.5, 0.5)
+    np.testing.assert_almost_equal(est, exact, 15)
+
+def test_initm41():
+    exact = 4.868887871591406
+    est = mu_4_1(0.5, 0.5)
+    np.testing.assert_almost_equal(est, exact, 14)
+
+def test_initm60():
+    exact = 36.25332722954843
+    est = mu_6_0(0.5, 0.5)
+    np.testing.assert_almost_equal(est, exact, 15)
+
+def test_initm61():
+    exact = 17.16666361477422
+    est = mu_6_1(0.5, 0.5)
+    np.testing.assert_almost_equal(est, exact, 14)
+
 
 def test_value():
     ay = 0.05

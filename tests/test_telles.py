@@ -1,6 +1,6 @@
 from math import sqrt, log
 import numpy as np
-from quadracheer.map import map_singular, map_nonsing
+from quadracheer.map import map_singular_pt, map_pts_wts
 from quadracheer.gaussian_quad import gaussxw
 from quadracheer.telles_singular import telles_singular
 from quadracheer.telles_quasi_singular import telles_quasi_singular
@@ -41,21 +41,31 @@ def test_quasi_singular():
 def test_QuadLogR():
     f = lambda x: np.log(np.abs(x - 0.5))
     exact = -1.0 - np.log(2.0)
-    tx, tw = map_singular(telles_singular, 50, 0.5, 0, 1)
+
+    mapped_x0 = map_singular_pt(0.5, 0, 1)
+    tx, tw = telles_singular(50, mapped_x0)
+    tx, tw = map_pts_wts(tx, tw, 0, 1)
+
     est = np.sum(f(tx) * tw)
     np.testing.assert_almost_equal(exact, est, 4)
 
 def test_quadlogr2():
     f = lambda x: x ** 2 * np.log(np.abs(x - 0.9))
     exact = -0.764714
-    tx, tw = map_singular(telles_singular, 40, 0.9, 0, 1)
+
+    mapped_x0 = map_singular_pt(0.9, 0, 1)
+    tx, tw = telles_singular(40, mapped_x0)
+    tx, tw = map_pts_wts(tx, tw, 0, 1)
+
     est = np.sum(f(tx) * tw)
     np.testing.assert_almost_equal(exact, est, 4)
 
 def test_quadlogr3():
     f = lambda x: x ** 2 * np.log(np.abs(x - 3.9))
     exact = -18.459
-    tx, tw = map_singular(telles_singular, 50, 3.9, 3, 4)
+    mapped_x0 = map_singular_pt(3.9, 3, 4)
+    tx, tw = telles_singular(50, mapped_x0)
+    tx, tw = map_pts_wts(tx, tw, 3, 4)
     est = np.sum(f(tx) * tw)
     np.testing.assert_almost_equal(exact, est, 4)
 
@@ -63,7 +73,7 @@ def test_anotherLogRDouble_G11():
     f = lambda x, y: (1 / (3 * np.pi)) *\
         np.log(1.0 / np.abs(x - y)) * x * y
     exact = 1 / (3 * np.pi)
-    gx, gw = map_nonsing(gaussxw, 75, -1.0, 1.0)
+    gx, gw = gaussxw(75)
     sum = 0.0
     for (pt, wt) in zip(gx, gw):
         x, w = telles_singular(76, pt)

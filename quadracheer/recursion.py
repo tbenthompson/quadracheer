@@ -34,11 +34,11 @@ def modified_moments(descriptor, k_max, *args):
                                      *args))
     return moments
 
-def recursive_quad(descriptor, n_pts, *args):
-    mu = modified_moments(descriptor, n_pts - 1, *args)
+def recursive_quad(moments):
+    n_pts = len(moments)
     x = gll_nodes(n_pts)
     vander = modified_vandermonde(x)
-    w = np.linalg.solve(vander, mu)
+    w = np.linalg.solve(vander, moments)
 
     x = np.array(x)
     w = np.array(w)

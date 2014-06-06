@@ -7,7 +7,7 @@ def test_subtract_sing():
     f = lambda x: eval_legendre(degree, x) * log(x + 1)
     almost_exact_x, almost_exact_w = telles_singular(51, -1)
     exact = sum(f(almost_exact_x) * almost_exact_w)
-    print exact
+    # print exact
 
     gauss_x, gauss_w = gaussxw(degree + 1)
     est = sum(f(gauss_x) * gauss_w)
