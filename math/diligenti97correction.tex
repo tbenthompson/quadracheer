@@ -51,28 +51,39 @@ Integral evaluation in the BEM solution of (hyper)singular integral
 equations. 2D problems on polygonal domains. 1997 J. Computational and 
 Applied Mathematics.
 
-For Legendre Polynomials. Re-derive using $k_1^{(1)}$ and $k_0^{(1)}$ if a 
-different basis is desired. Here, $k_1^{(1)} = 1$ and $k_0^{(1)} = 0$
+For Legendre Polynomials , $k_1^{(1)} = 1$ and $k_0^{(1)} = 0$.
+
+In general, $p_1(x) = k_1 x + k_0$ and $p_0(x) = 0$
 
 \begin{align}
+\begin{split}
     \bar{m}_2 = \int_{-1}^{1} \frac{K(x,y)}{r^2} P_2(x) dx \\
     = \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} x P_1(x) dx - \beta_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} P_0(x) dx \\
-    = \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} x^2  dx - \beta_1 \bar{m}_0   \\
-    = \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (x^2 - 2ax + a^2 + b^2) dx - 
-      \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (-2ax + a^2 + b^2)  dx -
+    = \alpha_1 k_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} x^2  dx + \alpha_1 k_0 \int_{-1}^{1} \frac{K(x,y)}{r^2} x  dx - \beta_1 \bar{m}_0   \\
+    = \alpha_1 k_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (x^2 - 2ax + a^2 + b^2) dx - \\
+      \alpha_1 k_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} ((-2a - (k_0 / k_1))x + a^2 + b^2)  dx -
       \beta_1 \bar{m}_0 \\
     (r^2 = x^2 - 2ax + a^2 + b^2) \\
-    = \alpha_1 \int_{-1}^{1} K(x,y) dx +
-      \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} 2ax dx -
-      \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (a^2 + b^2) dx -
+    = \alpha_1 k_1 \int_{-1}^{1} K(x,y) dx +
+      \alpha_1 k_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (2a + (k_0 / k_1))x dx -\\
+      \alpha_1 k_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (a^2 + b^2) dx -
       \beta_1 \bar{m}_0 \\
-    = \alpha_1 m_0 +
-      2 a \alpha_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} P_1(x) dx -
-      \alpha_1 (a^2 + b^2) \bar{m}_0 -
+      (x = \frac{p_1(x) - k_0}{k_1})\\
+    = \alpha_1 k_1 m_0 +
+      \alpha_1 k_1 \int_{-1}^{1} \frac{K(x,y)}{r^2} (2a + (k_0 / k_1))\frac{p_1(x) - k_0}{k_1} dx -
+      \alpha_1 k_1 (a^2 + b^2) \bar{m}_0 -
       \beta_1 \bar{m}_0 \\
+    = \alpha_1 k_1 (m_0 +
+    \frac{2a + (k_0 / k_1)}{k_1} (\bar{m}_1 - k_0 \bar{m}_0)) -  
+    (\alpha_1 k_1 (a^2 + b^2) + \beta_1) \bar{m}_0 \\
+    (\mbox{Legendre Polynomials}, k_1 = 1, k_0 = 0)\\
     = \alpha_1 (m_0 + 2 a \bar{m}_1) - 
-    (\alpha_1(a^2 + b^2) + \beta_1) \bar{m}_0
+    (\alpha_1(a^2 + b^2) + \beta_1) \bar{m}_0 \\
+    (\mbox{Jacobi(1,1) Polynomials}, k_1 = 2, k_0 = 0)\\
+    = 2\alpha_1 (m_0 + a \bar{m}_1) - 
+    (2\alpha_1(a^2 + b^2) + \beta_1) \bar{m}_0
+\end{split}
 \end{align}
 
-Other corrections. The function for $mu_3^1$ in Aimi, Diligenti 2002 is wrong. Actually, many of those initial values are wrong. Instead, just use the SAGE worksheet I made.
+Other corrections. The function for $\mu_3^1$ in Aimi, Diligenti 2002 is wrong. Actually, many of those initial values are wrong. Instead, just use the SAGE worksheet I made. Or extract the values from the code.
 \end{document}
